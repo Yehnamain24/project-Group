@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saveurs du Cameroun - Patrimoine Culinaire des 10 Régions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cameroon-green': '#007a5e',
+                        'cameroon-red': '#ce1126',
+                        'cameroon-yellow': '#fcd116',
+                    },
+                    fontFamily: {
+                        'elegant': ['Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .region-card:hover .flag-bar {
+            height: 8px;
+        }
+        .dish-card:hover {
+            transform: translateY(-5px);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #007a5e, #ce1126, #fcd116);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-cameroon-green"></div>
+                        <div class="w-8 h-8 rounded-full bg-cameroon-red"></div>
+                        <div class="w-8 h-8 rounded-full bg-cameroon-yellow"></div>
+                    </div>
+                    <span class="ml-3 font-elegant text-2xl font-bold gradient-text">Saveurs du Cameroun</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-cameroon-green font-medium transition">Accueil</a>
+                    <a href="#" class="text-gray-700 hover:text-cameroon-red font-medium transition">Régions</a>
+                    <a href="#" class="text-gray-700 hover:text-cameroon-yellow font-medium transition">Recettes</a>
+                    <a href="#" class="text-gray-700 hover:text-cameroon-green font-medium transition">Galerie</a>
+                    <a href="#" class="text-gray-700 hover:text-cameroon-red font-medium transition">Contact</a>
+                </div>
+                
+                <div>
+                    <button class="bg-gradient-to-r from-cameroon-green to-cameroon-red text-white px-6 py-3 rounded-full hover:shadow-lg transition font-medium">
+                        Explorer les Recettes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow text-white py-24">
+        <div class="absolute inset-0 bg-black opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center fade-in">
+                <h1 class="font-elegant text-5xl md:text-7xl font-bold mb-6">Patrimoine Culinaire<br>du <span class="bg-white text-transparent bg-clip-text">Cameroun</span></h1>
+                <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 opacity-90">
+                    Découvrez la richesse gastronomique des 10 régions camerounaises, un voyage culinaire à travers l'Afrique en miniature
+                </p>
+                
+                <!-- Bandeau drapeau -->
+                <div class="flex justify-center mb-12">
+                    <div class="flex rounded-full overflow-hidden shadow-2xl">
+                        <div class="w-32 h-6 bg-cameroon-green"></div>
+                        <div class="w-32 h-6 bg-cameroon-red"></div>
+                        <div class="w-32 h-6 bg-cameroon-yellow"></div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button class="bg-white text-cameroon-green px-8 py-4 rounded-full hover:bg-gray-100 transition transform hover:-translate-y-1 font-semibold text-lg shadow-lg">
+                        Découvrir les Régions
+                    </button>
+                    <button class="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:bg-opacity-10 transition font-semibold text-lg">
+                        Voir les Recettes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="py-20 bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <h2 class="font-elegant text-4xl text-gray-800 mb-6">10 Régions, Une Diversité Culinaire Unique</h2>
+            <p class="text-xl text-gray-600 mb-12">
+                Le Cameroun, surnommé "l'Afrique en miniature", offre une mosaïque de saveurs influencée par ses 250 ethnies et ses multiples écosystèmes. 
+                Chaque région possède ses spécialités culinaires uniques, reflet de son histoire, de sa culture et de ses ressources naturelles.
+            </p>
+            
+            <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-full bg-cameroon-green mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">10</span>
+                    </div>
+                    <p class="font-semibold">Régions</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-full bg-cameroon-red mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">250+</span>
+                    </div>
+                    <p class="font-semibold">Ethnies</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-full bg-cameroon-yellow mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">100+</span>
+                    </div>
+                    <p class="font-semibold">Plats Typiques</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Régions et Spécialités -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-elegant text-4xl text-gray-800 mb-4">Les 10 Régions & Leurs Spécialités</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Explorez la diversité culinaire de chaque région camerounaise
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Adamaoua -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-green flex items-center justify-center">
+                                <span class="text-white font-bold">1</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Adamaoua</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Bouillie de mil</p>
+                                    <p class="text-sm text-gray-600">Céréale traditionnelle des plateaux</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Viande de brousse</p>
+                                    <p class="text-sm text-gray-600">Gibier local préparé en sauce</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Honey</p>
+                                    <p class="text-sm text-gray-600">Miel pur des forêts de l'Adamaoua</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Centre -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-red flex items-center justify-center">
+                                <span class="text-white font-bold">2</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Centre</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Sanga</p>
+                                    <p class="text-sm text-gray-600">Plat Béti au manioc et feuilles</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Kondrè</p>
+                                    <p class="text-sm text-gray-600">Ragoût de viande fumée et épinards</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Mets de pistache</p>
+                                    <p class="text-sm text-gray-600">Sauce crémeuse aux arachides</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Est -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-yellow flex items-center justify-center">
+                                <span class="text-white font-bold">3</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Est</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Mbongo Tchobi</p>
+                                    <p class="text-sm text-gray-600">Sauce noire épicée au poisson</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Poisson braisé</p>
+                                    <p class="text-sm text-gray-600">Spécialité des rivières de l'Est</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Kwem</p>
+                                    <p class="text-sm text-gray-600">Vin de palme traditionnel</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Extrême-Nord -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-green flex items-center justify-center">
+                                <span class="text-white font-bold">4</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Extrême-Nord</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Boule de mil</p>
+                                    <p class="text-sm text-gray-600">Base alimentaire avec sauces variées</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Délégé</p>
+                                    <p class="text-sm text-gray-600">Viande séchée et épicée</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Fruits secs</p>
+                                    <p class="text-sm text-gray-600">Dattes, noix et raisins secs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Littoral -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-red flex items-center justify-center">
+                                <span class="text-white font-bold">5</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Littoral</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Ndolé</p>
+                                    <p class="text-sm text-gray-600">Plat national aux feuilles amères</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Poulet DG</p>
+                                    <p class="text-sm text-gray-600">Poulet Directeur Général</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Bobolo</p>
+                                    <p class="text-sm text-gray-600">Bâton de manioc fermenté</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nord -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-yellow flex items-center justify-center">
+                                <span class="text-white font-bold">6</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Nord</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Tchakpalo</p>
+                                    <p class="text-sm text-gray-600">Bouillie de maïs fermenté</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Viande de mouton</p>
+                                    <p class="text-sm text-gray-600">Spécialité des éleveurs peuls</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Beignets de mil</p>
+                                    <p class="text-sm text-gray-600">Snack traditionnel sucré</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nord-Ouest -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-green flex items-center justify-center">
+                                <span class="text-white font-bold">7</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Nord-Ouest</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Achu</p>
+                                    <p class="text-sm text-gray-600">Plat de taro avec sauce jaune</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Nkwi</p>
+                                    <p class="text-sm text-gray-600">Soupe de fourmis volantes</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Corn fufu</p>
+                                    <p class="text-sm text-gray-600">Fufu de maïs avec sauce</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ouest -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-red flex items-center justify-center">
+                                <span class="text-white font-bold">8</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Ouest</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Poulet à la sauce jaune</p>
+                                    <p class="text-sm text-gray-600">Spécialité bamiléké</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Koki</p>
+                                    <p class="text-sm text-gray-600">Gâteau de haricots</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Taro sauce jaune</p>
+                                    <p class="text-sm text-gray-600">Plat traditionnel bamiléké</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sud -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-yellow flex items-center justify-center">
+                                <span class="text-white font-bold">9</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Sud</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Mbongo'o</p>
+                                    <p class="text-sm text-gray-600">Sauce noire au poisson fumé</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Eru</p>
+                                    <p class="text-sm text-gray-600">Plat de feuilles avec viande</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Water fufu</p>
+                                    <p class="text-sm text-gray-600">Fufu de manioc</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sud-Ouest -->
+                <div class="region-card bg-white rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="flag-bar h-2 bg-gradient-to-r from-cameroon-green via-cameroon-red to-cameroon-yellow transition-all duration-300"></div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 rounded-full bg-cameroon-green flex items-center justify-center">
+                                <span class="text-white font-bold">10</span>
+                            </div>
+                            <h3 class="font-elegant text-2xl text-gray-800 ml-4">Sud-Ouest</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-green mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Ekwang</p>
+                                    <p class="text-sm text-gray-600">Roulades de cocoyam</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-red mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Kwacoco</p>
+                                    <p class="text-sm text-gray-600">Pâte de cocoyam avec poisson</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-3 h-3 rounded-full bg-cameroon-yellow mt-1 mr-3"></div>
+                                <div>
+                                    <p class="font-semibold">Mbongo Tchobi</p>
+                                    <p class="text-sm text-gray-600">Sauce noire aux épices</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recettes Populaires -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-elegant text-4xl text-gray-800 mb-4">Recettes Emblématiques</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Découvrez les plats les plus célèbres du Cameroun avec leurs recettes traditionnelles
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Recette 1: Ndolé -->
+                <div class="dish-card bg-gray-50 rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="h-48 bg-gradient-to-br from-cameroon-green to-cameroon-red flex items-center justify-center">
+                        <span class="text-white font-elegant text-2xl text-center p-4">Ndolé<br><span class="text-lg">(Plat National)</span></span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-elegant text-2xl text-gray-800 mb-4">Recette du Ndolé</h3>
+                        <div class="space-y-3">
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-green text-white flex items-center justify-center text-xs font-bold mr-3">1</div>
+                                <p class="text-gray-700">Faire bouillir les feuilles de ndolé avec du bicarbonate</p>
+                            </div>
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-red text-white flex items-center justify-center text-xs font-bold mr-3">2</div>
+                                <p class="text-gray-700">Faire revenir les arachides écrasées avec les épices</p>
+                            </div>
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-yellow text-white flex items-center justify-center text-xs font-bold mr-3">3</div>
+                                <p class="text-gray-700">Ajouter viande/poisson et mijoter 30 minutes</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 bg-cameroon-green text-white py-3 rounded-lg hover:bg-cameroon-red transition font-medium">
+                            Voir la Recette Complète
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recette 2: Poulet DG -->
+                <div class="dish-card bg-gray-50 rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="h-48 bg-gradient-to-br from-cameroon-red to-cameroon-yellow flex items-center justify-center">
+                        <span class="text-white font-elegant text-2xl text-center p-4">Poulet DG<br><span class="text-lg">(Spécialité)</span></span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-elegant text-2xl text-gray-800 mb-4">Recette du Poulet DG</h3>
+                        <div class="space-y-3">
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-green text-white flex items-center justify-center text-xs font-bold mr-3">1</div>
+                                <p class="text-gray-700">Découper et mariner le poulet avec épices</p>
+                            </div>
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-red text-white flex items-center justify-center text-xs font-bold mr-3">2</div>
+                                <p class="text-gray-700">Faire frire plantains et légumes séparément</p>
+                            </div>
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-yellow text-white flex items-center justify-center text-xs font-bold mr-3">3</div>
+                                <p class="text-gray-700">Tout mélanger avec sauce tomate maison</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 bg-cameroon-red text-white py-3 rounded-lg hover:bg-cameroon-yellow hover:text-gray-800 transition font-medium">
+                            Voir la Recette Complète
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recette 3: Achu -->
+                <div class="dish-card bg-gray-50 rounded-2xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl fade-in">
+                    <div class="h-48 bg-gradient-to-br from-cameroon-yellow to-cameroon-green flex items-center justify-center">
+                        <span class="text-white font-elegant text-2xl text-center p-4">Achu<br><span class="text-lg">(Nord-Ouest)</span></span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-elegant text-2xl text-gray-800 mb-4">Recette de l'Achu</h3>
+                        <div class="space-y-3">
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-green text-white flex items-center justify-center text-xs font-bold mr-3">1</div>
+                                <p class="text-gray-700">Cuire le taro jusqu'à tendreté puis piler</p>
+                            </div>
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-red text-white flex items-center justify-center text-xs font-bold mr-3">2</div>
+                                <p class="text-gray-700">Préparer la sauce jaune avec huile de palme</p>
+                            </div>
+                            <div class="flex">
+                                <div class="w-6 h-6 rounded-full bg-cameroon-yellow text-white flex items-center justify-center text-xs font-bold mr-3">3</div>
+                                <p class="text-gray-700">Ajouter viande/poisson et épices traditionnelles</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 bg-cameroon-yellow text-gray-800 py-3 rounded-lg hover:bg-cameroon-green hover:text-white transition font-medium">
+                            Voir la Recette Complète
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-20 bg-gradient-to-r from-cameroon-green to-cameroon-red text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <h2 class="font-elegant text-4xl md:text-5xl mb-6">Prêt à Découvrir la Cuisine Camerounaise?</h2>
+            <p class="text-xl mb-10 opacity-90">
+                Rejoignez notre communauté et explorez plus de 100 recettes traditionnelles des 10 régions du Cameroun
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-white text-cameroon-green px-8 py-4 rounded-full hover:bg-gray-100 transition transform hover:-translate-y-1 font-semibold text-lg shadow-lg">
+                    Explorer Toutes les Recettes
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white hover:bg-opacity-10 transition font-semibold text-lg">
+                    Télécharger le Livre de Recettes
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="flex items-center space-x-1">
+                            <div class="w-4 h-4 rounded-full bg-cameroon-green"></div>
+                            <div class="w-4 h-4 rounded-full bg-cameroon-red"></div>
+                            <div class="w-4 h-4 rounded-full bg-cameroon-yellow"></div>
+                        </div>
+                        <span class="ml-2 font-elegant text-xl">Saveurs du Cameroun</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Découvrez et préservez le patrimoine culinaire des 10 régions du Cameroun.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Explorer</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Régions</a></li>
+                        <li><a href="#" class="hover:text-white transition">Recettes</a></li>
+                        <li><a href="#" class="hover:text-white transition">Ingrédients</a></li>
+                        <li><a href="#" class="hover:text-white transition">Techniques</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li>contact@saveurscameroun.cm</li>
+                        <li>+237 673692729</li>
+                        <li>douala, Cameroun</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Ressources</h4>
+                    <button class="bg-cameroon-green text-white px-4 py-2 rounded-lg hover:bg-cameroon-red transition text-sm font-medium w-full mb-2">
+                        Livre de Recettes
+                    </button>
+                    <button class="border border-cameroon-yellow text-cameroon-yellow px-4 py-2 rounded-lg hover:bg-cameroon-yellow hover:text-gray-800 transition text-sm font-medium w-full">
+                        Guide des Régions
+                    </button>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Saveurs du Cameroun. Tous droits réservés. | Fièrement Camerounais</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation au défilement
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observer tous les éléments avec la classe fade-in
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
