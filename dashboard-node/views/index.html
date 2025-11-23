@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard – Mets Cameroun</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="flex bg-gray-100">
+
+<aside class="w-64 bg-[#007A3D] text-white fixed h-screen p-6">
+<h2 class="text-xl font-bold mb-6">Dashboard</h2>
+<ul>
+<li class="mb-3"><a href="/" class="flex items-center gap-2"><i class="fas fa-home"></i> Tableau de bord</a></li>
+<li class="mb-3"><a href="/mets" class="flex items-center gap-2"><i class="fas fa-utensils"></i> Mets</a></li>
+<li class="mb-3"><a href="/regions" class="flex items-center gap-2"><i class="fas fa-map-marker-alt"></i> Régions</a></li>
+<li class="mb-3"><a href="/commandes" class="flex items-center gap-2"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
+<li class="mb-3"><a href="/contacts" class="flex items-center gap-2"><i class="fas fa-envelope"></i> Contacts</a></li>
+</ul>
+</aside>
+
+<main class="ml-64 p-6 flex-1">
+<h1 class="text-2xl font-bold mb-4">Tableau de bord</h1>
+
+<div class="grid grid-cols-4 gap-4 mb-6">
+  <div class="bg-green-500 text-white rounded-lg p-4 text-center">
+    Régions<br><strong id="total-regions">0</strong>
+  </div>
+  <div class="bg-yellow-500 text-white rounded-lg p-4 text-center">
+    Mets<br><strong id="total-mets">0</strong>
+  </div>
+  <div class="bg-red-600 text-white rounded-lg p-4 text-center">
+    Commandes<br><strong id="total-commandes">0</strong>
+  </div>
+  <div class="bg-green-700 text-white rounded-lg p-4 text-center">
+    CA total<br><strong id="ca-total">0 FCFA</strong>
+  </div>
+</div>
+
+<div class="bg-white rounded-lg shadow-lg p-4">
+<h2 class="font-bold mb-2">Commandes par Région</h2>
+<canvas id="chart-regions" style="max-height:300px;"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+async function fetchJson(url, opts = {}) {
+    try {
+        const res = await axios(url, opts);
+        return res.data;
+    } catch(err) {
+        console.error('Erreur API:', err.response?.data || err.message);
+        return [];
+    }
+}
+
+async function loadStats() {
+    const stats = await fetchJson('/api/statistiques');
+    const commandes = await fetchJson('/api/commandes');
+    const mets = await fetchJson('/api/mets');
+    const regions = await fetchJson('/api/region');
+
+    document.getElementById('total-regions').innerText = regions.length;
+    document.getElementById('total-mets').innerText = mets.length;
+    document.getElementById('total-commandes').innerText = commandes.length;
+
+    const caTotal = stats.reduce((s,i)=>s+(i.chiffre_affaires||0),0);
+    document.getElementById('ca-total').innerText = caTotal + ' FCFA';
+
+    const labels = regions.map(r => r.nom);
+    const data = regions.map(r => {
+        const regionStats = stats.filter(s => s.region_nom === r.nom);
+        return regionStats.reduce((sum,s) => sum + s.total_commandes, 0);
+    });
+
+    const colors = ['#007A33','#FFCD00','#CE1126','#007A33','#FFCD00','#CE1126'];
+
+    const ctx = document.getElementById('chart-regions').getContext('2d');
+    if(window._chartRegions) window._chartRegions.destroy();
+    window._chartRegions = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [{ label: 'Commandes par Région', data, backgroundColor: colors, borderRadius: 10 }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+    });
+}
+
+window.onload = loadStats;
+</script>
+</main>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Régions – Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="flex bg-gray-100">
+
+<aside class="w-64 bg-[#007A3D] text-white fixed h-screen p-6">
+<h2 class="text-xl font-bold mb-6 ">Dashboard</h2>
+<ul>
+<li class="mb-3"><a href="/" class="flex items-center gap-2"><i class="fas fa-home"></i> Tableau de bord</a></li>
+<li class="mb-3"><a href="/mets" class="flex items-center gap-2"><i class="fas fa-utensils"></i> Mets</a></li>
+<li class="mb-3"><a href="/regions" class="flex items-center gap-2"><i class="fas fa-map-marker-alt"></i> Régions</a></li>
+<li class="mb-3"><a href="/commandes" class="flex items-center gap-2"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
+<li class="mb-3"><a href="/contacts" class="flex items-center gap-2"><i class="fas fa-envelope"></i> Contacts</a></li>
+</ul>
+</aside>
+
+<main class="ml-64 p-6 flex-1">
+<h1 class="text-2xl font-bold mb-4">Régions</h1>
+
+<div class="bg-white p-4 rounded-lg shadow mb-6">
+<h2 class="font-bold mb-2">Ajouter une Région</h2>
+<div class="flex gap-4">
+<input id="region-nom" type="text" placeholder="Nom Région" class="border p-2 rounded"/>
+<button class="bg-green-600 text-white px-4 rounded" onclick="addRegion()">Ajouter</button>
+</div>
+</div>
+
+<div class="bg-white p-4 rounded-lg shadow">
+<table class="min-w-full border">
+<thead class="bg-gray-200">
+<tr>
+<th class="p-2">Nom</th>
+<th class="p-2">Actions</th>
+</tr>
+</thead>
+<tbody id="region-tbody"></tbody>
+</table>
+</div>
+</main>
+
+<script>
+const API_BASE = '';
+
+async function fetchJson(url, opts={}) {
+    try { return (await axios(url, opts)).data; }
+    catch(err){ console.error(err); return []; }
+}
+
+async function loadRegions() {
+    const regions = await fetchJson('/api/region');
+    const tbody = document.getElementById('region-tbody');
+    tbody.innerHTML = '';
+    regions.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="p-2 text-center">${r.nom}</td>
+            <td class="p-2 flex gap-2 justify-center">
+                <button class="bg-yellow-500 text-white px-2 rounded" onclick="editRow(this, ${r.id})"><i class="fas fa-edit"></i></button>
+                <button class="bg-red-600 text-white px-2 rounded" onclick="deleteRegion(${r.id})"><i class="fas fa-trash-alt"></i></button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+async function addRegion() {
+    const nom = document.getElementById('region-nom').value.trim();
+    if(!nom){ alert('Entrez un nom'); return; }
+    await fetchJson('/api/region', { method:'POST', data:{nom} });
+    document.getElementById('region-nom').value = '';
+    loadRegions();
+}
+
+async function deleteRegion(id) {
+    if(!confirm('Confirmer la suppression ?')) return;
+    await fetchJson(`/api/region/${id}`, { method:'DELETE' });
+    loadRegions();
+}
+
+// Edition inline
+function editRow(btn, id) {
+    const tr = btn.closest('tr');
+    const tdNom = tr.querySelector('td');
+    const oldNom = tdNom.innerText;
+    tdNom.innerHTML = `<input class="border p-1 w-full" value="${oldNom}">`;
+    btn.innerText = 'Sauvegarder';
+    btn.onclick = async () => {
+        const newNom = tdNom.querySelector('input').value.trim();
+        if(!newNom){ alert('Entrez un nom'); return; }
+        await fetchJson(`/api/region/${id}`, { method:'PUT', data:{nom:newNom} });
+        loadRegions();
+    };
+}
+
+// Initial load
+window.onload = loadRegions;
+</script>
+</body>
+</html>

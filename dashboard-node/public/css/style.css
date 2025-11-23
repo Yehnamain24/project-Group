@@ -1,0 +1,16 @@
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css');
+
+/* Couleurs Cameroun personnalisées */
+:root {
+  --cam-green: #007A3D;
+  --cam-red: #CE1126;
+  --cam-yellow: #FCD116;
+}
+
+/* Exemple cartes */
+.card {
+  @apply p-4 rounded-lg text-white shadow-lg;
+}
+.card-green { background-color: var(--cam-green); }
+.card-red { background-color: var(--cam-red); }
+.card-yellow { background-color: var(--cam-yellow); color:black; }
