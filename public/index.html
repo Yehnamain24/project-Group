@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation des mets </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <header>
+        <h1> Presentation des mets</h1>
+        <div class="search-box">
+            <input type="search" id="search-input" placeholder="Rechercher un met...">
+        </div>
+    </header>
+
+    <main>
+        <!-- C'est ici que les mets du backend seront affiche -->
+         <div id="mets-container" class="mets-grid">
+             <div class="loading">Chargement...</div>
+         </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
