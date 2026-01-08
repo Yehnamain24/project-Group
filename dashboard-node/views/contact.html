@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacts – Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="flex bg-gray-100">
+
+<aside class="w-64 bg-[#007A3D] text-white fixed h-screen p-6">
+<h2 class="text-xl font-bold mb-6">Dashboard</h2>
+<ul>
+<li class="mb-3"><a href="/" class="flex items-center gap-2"><i class="fas fa-home"></i> Tableau de bord</a></li>
+<li class="mb-3"><a href="/mets" class="flex items-center gap-2"><i class="fas fa-utensils"></i> Mets</a></li>
+<li class="mb-3"><a href="/regions" class="flex items-center gap-2"><i class="fas fa-map-marker-alt"></i> Régions</a></li>
+<li class="mb-3"><a href="/commandes" class="flex items-center gap-2"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
+<li class="mb-3"><a href="/contacts" class="flex items-center gap-2"><i class="fas fa-envelope"></i> Contacts</a></li>
+</ul>
+</aside>
+
+<main class="ml-64 p-6 flex-1">
+<h1 class="text-2xl font-bold mb-4">Contacts</h1>
+
+<div class="bg-white p-4 rounded-lg shadow mb-6">
+<h2 class="font-bold mb-2">Ajouter un Contact</h2>
+<div class="grid grid-cols-5 gap-4">
+<input id="contact-nom" type="text" placeholder="Nom" class="border p-2 rounded"/>
+<input id="contact-prenom" type="text" placeholder="Prénom" class="border p-2 rounded"/>
+<input id="contact-telephone" type="text" placeholder="Téléphone" class="border p-2 rounded"/>
+<input id="contact-email" type="email" placeholder="Email" class="border p-2 rounded"/>
+<input id="contact-message" type="text" placeholder="Message" class="border p-2 rounded"/>
+<button class="bg-green-600 text-white px-4 rounded" onclick="addContact()">Ajouter</button>
+</div>
+</div>
+
+<div class="bg-white p-4 rounded-lg shadow">
+<table class="min-w-full border">
+<thead class="bg-gray-200">
+<tr>
+<th class="p-2">Nom</th>
+<th class="p-2">Prénom</th>
+<th class="p-2">Téléphone</th>
+<th class="p-2">Email</th>
+<th class="p-2">Message</th>
+<th class="p-2">Actions</th>
+</tr>
+</thead>
+<tbody id="contact-tbody"></tbody>
+</table>
+</div>
+</main>
+
+<script>
+const API_BASE = '';
+
+async function fetchJson(url, opts={}) {
+    try { return (await axios(url, opts)).data; }
+    catch(err){ console.error(err); return []; }
+}
+
+async function loadContacts() {
+    const contacts = await fetchJson('/api/contact');
+    const tbody = document.getElementById('contact-tbody');
+    tbody.innerHTML = '';
+    contacts.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="p-2 text-center">${c.nom}</td>
+            <td class="p-2 text-center">${c.prenom}</td>
+            <td class="p-2 text-center">${c.telephone}</td>
+            <td class="p-2 text-center">${c.email}</td>
+            <td class="p-2 text-center">${c.message}</td>
+            <td class="p-2 flex gap-2 justify-center">
+                <button class="bg-red-600 text-white px-2 rounded" onclick="deleteContact(${c.id})"><i class="fas fa-trash-alt"></i></button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+async function addContact() {
+    const contact = {
+        nom: document.getElementById('contact-nom').value,
+        prenom: document.getElementById('contact-prenom').value,
+        telephone: document.getElementById('contact-telephone').value,
+        email: document.getElementById('contact-email').value,
+        message: document.getElementById('contact-message').value
+    };
+    await fetchJson('/api/contact', { method:'POST', data: contact });
+    document.getElementById('contact-nom').value = '';
+    document.getElementById('contact-prenom').value = '';
+    document.getElementById('contact-telephone').value = '';
+    document.getElementById('contact-email').value = '';
+    document.getElementById('contact-message').value = '';
+    loadContacts();
+}
+
+async function deleteContact(id) {
+    if(!confirm('Confirmer la suppression ?')) return;
+    await fetchJson(`/api/contact/${id}`, { method:'DELETE' });
+    loadContacts();
+}
+
+// Initial load
+window.onload = loadContacts;
+</script>
+
+</body>
+</html>

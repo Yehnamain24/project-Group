@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mets – Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="flex bg-gray-100">
+
+<aside class="w-64 bg-[#007A3D] text-white fixed h-screen p-6">
+<h2 class="text-xl font-bold mb-6">Dashboard</h2>
+<ul>
+<li class="mb-3"><a href="/" class="flex items-center gap-2"><i class="fas fa-home"></i> Tableau de bord</a></li>
+<li class="mb-3"><a href="/mets" class="flex items-center gap-2"><i class="fas fa-utensils"></i> Mets</a></li>
+<li class="mb-3"><a href="/regions" class="flex items-center gap-2"><i class="fas fa-map-marker-alt"></i> Régions</a></li>
+<li class="mb-3"><a href="/commandes" class="flex items-center gap-2"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
+<li class="mb-3"><a href="/contacts" class="flex items-center gap-2"><i class="fas fa-envelope"></i> Contacts</a></li>
+</ul>
+</aside>
+
+<main class="ml-64 p-6 flex-1">
+<h1 class="text-2xl font-bold mb-4">Mets</h1>
+
+<div class="bg-white p-4 rounded-lg shadow mb-6">
+<h2 class="font-bold mb-2">Ajouter un Met</h2>
+<div class="grid grid-cols-4 gap-4">
+<input id="met-nom" type="text" placeholder="Nom" class="border p-2 rounded"/>
+<input id="met-prix" type="number" placeholder="Prix" class="border p-2 rounded"/>
+<input id="met-stock" type="number" placeholder="Stock" class="border p-2 rounded"/>
+<select id="met-region" class="border p-2 rounded"></select>
+<button class="bg-green-600 text-white px-4 rounded" onclick="addMet()">Ajouter</button>
+</div>
+</div>
+
+<div class="bg-white p-4 rounded-lg shadow">
+<table class="min-w-full border">
+<thead class="bg-gray-200">
+<tr>
+<th class="p-2">Nom</th>
+<th class="p-2">Région</th>
+<th class="p-2">Prix</th>
+<th class="p-2">Stock</th>
+<th class="p-2">Actions</th>
+</tr>
+</thead>
+<tbody id="mets-tbody"></tbody>
+</table>
+</div>
+</main>
+
+<script>
+const API_BASE = '';
+
+async function fetchJson(url, opts={}) {
+    try { return (await axios(url, opts)).data; }
+    catch(err){ console.error(err); return []; }
+}
+
+async function loadRegions() {
+    const regions = await fetchJson('/api/region');
+    const select = document.getElementById('met-region');
+    select.innerHTML = '';
+    regions.forEach(r => {
+        const option = document.createElement('option');
+        option.value = r.id;
+        option.innerText = r.nom;
+        select.appendChild(option);
+    });
+    return regions;
+}
+
+async function loadMets() {
+    const mets = await fetchJson('/api/mets');
+    const regions = await fetchJson('/api/region');
+    
+    const regionsMap = {};
+    regions.forEach(r => { regionsMap[r.id] = r.nom; });
+
+    const tbody = document.getElementById('mets-tbody');
+    tbody.innerHTML = '';
+    mets.forEach(m => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="p-2 text-center">${m.nom}</td>
+            <td class="p-2 text-center">${regionsMap[m.region]}</td>
+            <td class="p-2 text-center">${m.prix} FCFA</td>
+            <td class="p-2 text-center">${m.stock}</td>
+            <td class="p-2 flex gap-2 justify-center">
+                <button class="bg-yellow-500 text-white px-2 rounded" onclick="editRow(this, ${m.id})"><i class="fas fa-edit"></i></button>
+                <button class="bg-red-600 text-white px-2 rounded" onclick="deleteMet(${m.id})"><i class="fas fa-trash-alt"></i></button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// cache des régions pour édition
+let regionsCache = [];
+async function fetchRegionsCache() {
+    if(regionsCache.length === 0) regionsCache = await loadRegions();
+    return regionsCache;
+}
+
+async function addMet() {
+    const nom = document.getElementById('met-nom').value.trim();
+    const prix = parseFloat(document.getElementById('met-prix').value);
+    const stock = parseInt(document.getElementById('met-stock').value);
+    const region = parseInt(document.getElementById('met-region').value);
+    if(!nom || isNaN(prix) || isNaN(stock) || isNaN(region)) { alert('Remplir tous les champs'); return; }
+    await fetchJson('/api/mets', { method:'POST', data:{nom, prix, stock, region} });
+    loadMets();
+    document.getElementById('met-nom').value = '';
+    document.getElementById('met-prix').value = '';
+    document.getElementById('met-stock').value = '';
+    document.getElementById('met-region').value = '';
+}
+
+async function deleteMet(id) {
+    if(!confirm('Confirmer la suppression ?')) return;
+    await fetchJson(`/api/mets/${id}`, { method:'DELETE' });
+    loadMets();
+}
+
+// Edition inline
+async function editRow(btn, id) {
+    const tr = btn.closest('tr');
+    const tds = tr.querySelectorAll('td');
+    const oldValues = [...tds].map(td => td.innerText);
+
+    const regions = await fetchRegionsCache();
+
+    // remplacer les cellules par inputs
+    tds[0].innerHTML = `<input class="border p-1 w-full" value="${oldValues[0]}">`;
+    tds[1].innerHTML = `<select class="border p-1 w-full">${regions.map(r => `<option value="${r.id}" ${r.nom===oldValues[1]?'selected':''}>${r.nom}</option>`).join('')}</select>`;
+    tds[2].innerHTML = `<input type="number" class="border p-1 w-full" value="${oldValues[2]}">`;
+    tds[3].innerHTML = `<input type="number" class="border p-1 w-full" value="${oldValues[3]}">`;
+    btn.innerText = 'Sauvegarder';
+    btn.onclick = async () => {
+        const newNom = tds[0].querySelector('input').value;
+        const newRegion = parseInt(tds[1].querySelector('select').value);
+        const newPrix = parseFloat(tds[2].querySelector('input').value);
+        const newStock = parseInt(tds[3].querySelector('input').value);
+        if(!newNom || isNaN(newPrix) || isNaN(newStock) || isNaN(newRegion)) { alert('Remplir tous les champs'); return; }
+        await fetchJson(`/api/mets/${id}`, { method:'PUT', data:{nom:newNom, prix:newPrix, stock:newStock, region:newRegion} });
+        loadMets();
+    };
+}
+
+// Initial load
+window.onload = async () => {
+    await loadRegions();
+    await loadMets();
+};
+</script>
+</body>
+</html>
+
